@@ -15,5 +15,6 @@
   flex: 1 auto;
   max-height: 100vh;
   overflow: auto;
+  padding: 0 12px;
 }
 </style>

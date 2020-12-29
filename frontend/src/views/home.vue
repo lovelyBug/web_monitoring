@@ -1,7 +1,19 @@
 <template>
   <div id="container"></div>
-  <div v-if="jsDayErrList.length">
-    <div v-for="dayErr in jsDayErrList" :key="dayErr.id" @click="getJsErrDetail(dayErr.id)">{{ dayErr.errorMessage }}</div>
+  <div v-if="jsDayErrList.length" class="err-list-container">
+    <div
+      v-for="(dayErr, index) in jsDayErrList"
+      :key="dayErr.id"
+      class="err-list-item"
+      :class="{ mt: !index }"
+      @click="getJsErrDetail(dayErr.id)"
+    >
+      <div class="msg-item">{{ dayErr.uploadType }}</div>
+      <div class="msg-item">{{ dayErr.errorMessage }}</div>
+      <div class="msg-item"><img :src="WEB_IMG" class="device-icon"></div>
+      <div class="msg-item">{{ dayErr.browserName }}</div>
+      <div class="msg-item">发生时间：{{ dayErr.createdAt }}</div>
+    </div>
   </div>
 </template>
 <script>
@@ -9,6 +21,9 @@
 import { Chart } from '@antv/g2'
 import { onMounted, reactive, toRefs } from 'vue'
 import * as API from '@/api/index.js'
+import ANDRIOD_IMG from '@/assets/images/andriod.png'
+import IOS_IMG from '@/assets/images/ios.png'
+import WEB_IMG from '@/assets/images/web.png'
 
 export default {
   setup () {
@@ -18,14 +33,17 @@ export default {
     // })
     const state = reactive({
       jsDayErrList: [],
-      jsErrDetail: {}
+      jsErrDetail: {},
+      ANDRIOD_IMG,
+      IOS_IMG,
+      WEB_IMG
     })
     const initLineChart = (errList) => {
       const chart = new Chart({
         container: "container",
         autoFit: true,
-        height: 300,
-        padding: [20, 20, 95, 40]
+        height: 200,
+        padding: [20, 20, 30, 20]
       });
       chart.data(errList);
 
@@ -79,7 +97,6 @@ export default {
       try {
         const res = await API.jsErrDetail({ errId })
         if(res.data.code === 200) {
-          console.log(res)
           state.jsErrDetail = res.data.data
         }
       } catch(e) {
@@ -96,5 +113,29 @@ export default {
   }
 }
 </script>
-<style  scoped>
+<style lang="less"  scoped>
+.err-list-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  .err-list-item {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #E8E8EA;
+    cursor: pointer;
+    &.mt {
+      border-top: 1px solid #E8E8EA;
+    }
+    .msg-item {
+      padding: 0 12px;
+      .device-icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
 </style>
