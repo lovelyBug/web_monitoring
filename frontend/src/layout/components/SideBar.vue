@@ -159,6 +159,7 @@ export default {
   max-height: 100%;
   overflow: hidden;
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
   align-items: center;
   position: relative;
