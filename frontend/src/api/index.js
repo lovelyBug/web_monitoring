@@ -1,72 +1,25 @@
 import axios from 'axios'
 
-export function jsErrList(data) {
+export function getJsErrListByHour(data) {
   return axios({
-    url: '/jsErrList',
+    url: '/getJsErrListByHour',
     method: 'GET',
     params: data
   })
 }
 
-export function jsErrDetail(data) {
+
+export function getJSErrInfoByHour(data) {
   return axios({
-    url: '/jsErrDetail',
+    url: '/getJSErrInfoByHour',
     method: 'GET',
     params: data
   })
 }
 
-export function jsDayError(data) {
+export function getJsErrInfoByType(data) {
   return axios({
-    url: '/jsDayError',
-    method: 'GET',
-    params: data
-  })
-}
-
-export function apiErrList(data) {
-  return axios({
-    url: '/apiErrList',
-    method: 'GET',
-    params: data
-  })
-}
-
-export function apiErrDetail(data) {
-  return axios({
-    url: '/apiErrDetail',
-    method: 'GET',
-    params: data
-  })
-}
-
-export function apiDayError(data) {
-  return axios({
-    url: '/apiDayError',
-    method: 'GET',
-    params: data
-  })
-}
-
-export function resourceErrList(data) {
-  return axios({
-    url: '/resourceErrList',
-    method: 'GET',
-    params: data
-  })
-}
-
-export function resourceErrDetail(data) {
-  return axios({
-    url: '/resourceErrDetail',
-    method: 'GET',
-    params: data
-  })
-}
-
-export function resourceDayError(data) {
-  return axios({
-    url: '/resourceDayError',
+    url: '/getJsErrInfoByType',
     method: 'GET',
     params: data
   })

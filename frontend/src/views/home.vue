@@ -6,7 +6,7 @@
       :key="dayErr.id"
       class="err-list-item"
       :class="{ mt: !index }"
-      @click="getJsErrDetail(dayErr.id)"
+      @click="getJsErrInfoByType(dayErr.id)"
     >
       <div class="msg-item">{{ dayErr.uploadType }}</div>
       <div class="msg-item">{{ dayErr.errorMessage }}</div>
@@ -15,8 +15,8 @@
       <div class="msg-item">发生时间：{{ dayErr.createdAt }}</div>
     </div> -->
     <a-table :data-source="jsDayErrList" :loading="loading" :columns="columns">
-      <template #operation="{}">
-        <a-button size="small" type="link">查看错误详情</a-button>
+      <template #operation="{record}">
+        <a-button size="small" type="link" @click="getJsErrInfoByType(record.errorMessage)">查看错误详情</a-button>
       </template>
     </a-table>
   </div>
@@ -110,17 +110,18 @@ export default {
       chart.on('interval:click', (ev) => {
         const intervalElement = ev.target.get('element');
         const data = intervalElement.getModel().data;
-        getJsDayError(data.happenDay)
+        getJSErrInfoByHour(data.time)
       });
       chart.legend(false);
       chart
         .interval()
-        .position('happenDay*count')
+        .position('time*counts')
       chart.render();
     }
-    const getJsErrList = async () => {
+    const getJsErrListByHour = async () => {
       try {
-        const res = await API.jsErrList()
+        const params = { day: '20201124' }
+        const res = await API.getJsErrListByHour(params)
         if(res.data.code === 200) {
           const errList = res.data.data.map(item => {
             item.count = +item.count
@@ -132,10 +133,10 @@ export default {
         console.log(e)
       }
     }
-    const getJsDayError = async (day) => {
+    const getJSErrInfoByHour = async (hour) => {
       try {
         state.loading = true
-        const res = await API.jsDayError({ day })
+        const res = await API.getJSErrInfoByHour({ hour })
         if(res.data.code === 200) {
           state.jsDayErrList = res.data.data.map(item => {
             item.key = item.id
@@ -148,9 +149,9 @@ export default {
         state.loading = false
       }
     }
-    const getJsErrDetail = async (errId) => {
+    const getJsErrInfoByType = async (errorMessage) => {
       try {
-        const res = await API.jsErrDetail({ errId })
+        const res = await API.getJsErrInfoByType({ errorMessage })
         if(res.data.code === 200) {
           state.jsErrDetail = res.data.data
         }
@@ -159,11 +160,11 @@ export default {
       }
     }
     onMounted(() => {
-      getJsErrList()
+      getJsErrListByHour()
     })
     return {
       ...toRefs(state),
-      getJsErrDetail
+      getJsErrInfoByType
     }
   }
 }
