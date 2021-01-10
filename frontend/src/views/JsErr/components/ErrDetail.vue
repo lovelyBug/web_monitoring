@@ -3,14 +3,11 @@
     v-model:visible="visible"
     :destroyOnClose="true"
     :maskClosable="false"
+    width="80%"
     title="错误详情"
   >
     <a-spin :spinning="loading" tip="Loading...">
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
+      -
     </a-spin>
     <template #footer>
       <a-button key="back" @click="closeDialog">
@@ -29,7 +26,7 @@ export default {
   setup() {
     const state = reactive({
       visible: false,
-      loading: true
+      loading: false
     })
     const openDialog = (errorMessage) => {
       getJsErrInfoByType(errorMessage)
@@ -48,7 +45,7 @@ export default {
       } catch(e) {
         console.log(e)
       } finally {
-        // state.loading = false
+        state.loading = false
       }
     }
     return {

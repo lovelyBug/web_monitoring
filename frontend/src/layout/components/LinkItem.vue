@@ -1,11 +1,10 @@
 <template>
-  <div @click="linkTo" class="link-item-wrapper">
+  <router-link :to="menu.link" class="link-item-wrapper">
     {{ menu.label }}
-  </div>
+  </router-link>
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
 
 export default {
   props: {
@@ -13,13 +12,6 @@ export default {
       type: Object,
       default: () => {}
     }
-  },
-  setup(props) {
-    const router = useRouter()
-    const linkTo = () => {
-      router.push(props.menu.link)
-    }
-    return { linkTo }
   }
 }
 </script>

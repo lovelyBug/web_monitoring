@@ -41,6 +41,7 @@ import {
   FieldTimeOutlined
 } from '@ant-design/icons-vue';
 import ErrDetail from './components/ErrDetail'
+import { useRouter } from 'vue-router'
 
 export default {
   components: {
@@ -53,6 +54,8 @@ export default {
     ErrDetail
   },
   setup () {
+    const router = useRouter()
+    console.log(router)
     const errDetail = ref(null)
     const state = reactive({
       jsDayErrList: [],
@@ -160,7 +163,7 @@ export default {
       }
     }
     const openErrDetail = (errorMessage) => {
-      errDetail.value.openDialog(errorMessage)
+      router.push(`/js_err_detail?errorMessage=${errorMessage}`)
     }
     onMounted(() => {
       getJsErrListByHour()
