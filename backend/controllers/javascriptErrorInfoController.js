@@ -3,6 +3,7 @@ const statusCode = require('../util/status-code')
 const db = require('../config/db')
 const Sequelize = db.sequelize;
 const { QueryTypes } = require('sequelize');
+const Utils = require('../util/utils.js')
 // const moment = require('moment');
 
 class JavascriptErrorInfoController {
@@ -52,8 +53,12 @@ class JavascriptErrorInfoController {
       }
       const startTime = `2020-11-24 ${hour}:00:00`
       const endTime = `2020-11-24 ${hour}:59:59`
-      const sql = `SELECT errorMessage, COUNT(deviceName = 'PC' or null) as pcNum, COUNT(deviceName = 'AND' or null) as androidNum, COUNT(deviceName = 'IOS' or null) as iosNum FROM webfunny1076JavascriptErrorInfo20201124 WHERE happenDate BETWEEN '${startTime}' and '${endTime}' group by errorMessage`
-      const errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
+      const sql = `SELECT errorMessage, COUNT(deviceName = 'PC' or null) as pcNum, COUNT(deviceName = 'AND' or null) as androidNum, COUNT(deviceName = 'IOS' or null) as iosNum, COUNT(DISTINCT userId) as userNum FROM webfunny1076JavascriptErrorInfo20201124 WHERE happenDate BETWEEN '${startTime}' and '${endTime}' group by errorMessage`
+      let errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
+      errDetail = errDetail.map(item => {
+        item.errorMessage = Utils.b64DecodeUnicode(item.errorMessage)
+        return item
+      })
       ctx.response.status = 200;
       ctx.body = statusCode.SUCCESS_200('success', errDetail)
     } catch(e) {

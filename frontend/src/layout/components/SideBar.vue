@@ -16,7 +16,7 @@
               <LinkItem
                 v-for="menu in menus.children"
                 :key="menu.label"
-                :text="menu.label"
+                :menu="menu"
               />
             </div>
           </template>
@@ -88,7 +88,7 @@ export default {
           children: [
             {
               label: 'JS错误统计',
-              link: ''
+              link: '/js_err'
             },
             {
               label: 'API接口错误统计',

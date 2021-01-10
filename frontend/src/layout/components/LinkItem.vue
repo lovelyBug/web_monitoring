@@ -1,16 +1,25 @@
 <template>
-  <div class="link-item-wrapper">
-    {{ text }}
+  <div @click="linkTo" class="link-item-wrapper">
+    {{ menu.label }}
   </div>
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
+
 export default {
   props: {
-    text: {
-      type: String,
-      default: ''
+    menu: {
+      type: Object,
+      default: () => {}
     }
+  },
+  setup(props) {
+    const router = useRouter()
+    const linkTo = () => {
+      router.push(props.menu.link)
+    }
+    return { linkTo }
   }
 }
 </script>
