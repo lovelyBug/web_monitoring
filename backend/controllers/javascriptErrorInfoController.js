@@ -52,7 +52,7 @@ class JavascriptErrorInfoController {
       }
       const startTime = `2020-11-24 ${hour}:00:00`
       const endTime = `2020-11-24 ${hour}:59:59`
-      const sql = `SELECT * FROM webfunny1076JavascriptErrorInfo20201124 WHERE happenDate BETWEEN '${startTime}' and '${endTime}'`
+      const sql = `SELECT errorMessage, COUNT(deviceName = 'PC' or null) as pcNum, COUNT(deviceName = 'AND' or null) as androidNum, COUNT(deviceName = 'IOS' or null) as iosNum FROM webfunny1076JavascriptErrorInfo20201124 WHERE happenDate BETWEEN '${startTime}' and '${endTime}' group by errorMessage`
       const errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
       ctx.response.status = 200;
       ctx.body = statusCode.SUCCESS_200('success', errDetail)

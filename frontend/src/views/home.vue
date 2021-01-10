@@ -14,9 +14,13 @@
       <div class="msg-item">{{ dayErr.browserName }}</div>
       <div class="msg-item">发生时间：{{ dayErr.createdAt }}</div>
     </div> -->
+    <div class="title-view">
+      <span>JS报错类型：（{{ errNum }}个）</span>
+      <span>{{ currentTime }}点</span>
+    </div>
     <a-table :data-source="jsDayErrList" :loading="loading" :columns="columns">
       <template #operation="{record}">
-        <a-button size="small" type="link" @click="getJsErrInfoByType(record.errorMessage)">查看错误详情</a-button>
+        <a-button size="small" type="link" @click="getJsErrInfoByType(record.errorMessage)">错误详情</a-button>
       </template>
     </a-table>
   </div>
@@ -42,6 +46,8 @@ export default {
       ANDRIOD_IMG,
       IOS_IMG,
       WEB_IMG,
+      currentTime: '',
+      errNum: 0,
       loading: false,
       columns: [
         {
@@ -76,8 +82,8 @@ export default {
         },
         {
           title: '发生时间',
-          dataIndex: 'createdAt',
-          key: 'createdAt',
+          dataIndex: 'happenDate',
+          key: 'happenDate',
           ellipsis: true
         },
         {
@@ -92,7 +98,7 @@ export default {
         container: "container",
         autoFit: true,
         height: 200,
-        padding: [20, 20, 30, 20]
+        padding: [20, 20, 30, 24]
       });
       chart.data(errList);
 
@@ -110,7 +116,9 @@ export default {
       chart.on('interval:click', (ev) => {
         const intervalElement = ev.target.get('element');
         const data = intervalElement.getModel().data;
-        getJSErrInfoByHour(data.time)
+        const {time} = data
+        state.currentTime = `2020-11-24 ${time}`
+        getJSErrInfoByHour(time)
       });
       chart.legend(false);
       chart
@@ -128,6 +136,9 @@ export default {
             return item
           })
           initLineChart(errList)
+          const { time } = errList[errList.length - 1]
+          state.currentTime = `2020-11-24 ${time}`
+          getJSErrInfoByHour(time)
         }
       } catch(e) {
         console.log(e)
@@ -138,7 +149,9 @@ export default {
         state.loading = true
         const res = await API.getJSErrInfoByHour({ hour })
         if(res.data.code === 200) {
-          state.jsDayErrList = res.data.data.map(item => {
+          const { data } = res.data
+          state.errNum = data.length
+          state.jsDayErrList = data.map(item => {
             item.key = item.id
             return item
           })
@@ -176,6 +189,14 @@ export default {
   margin-top: 20px;
   width: 100%;
   overflow: hidden;
+  // font-size: 12px;
+  .title-view {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
   .err-list-item {
     width: 100%;
     height: 48px;
