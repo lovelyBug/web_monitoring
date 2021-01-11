@@ -7,7 +7,7 @@
     title="错误详情"
   >
     <a-spin :spinning="loading" tip="Loading...">
-      -
+      {{ jsErrDetail }}
     </a-spin>
     <template #footer>
       <a-button key="back" @click="closeDialog">
@@ -25,20 +25,21 @@ import { reactive, toRefs } from 'vue'
 export default {
   setup() {
     const state = reactive({
+      jsErrDetail: {},
       visible: false,
       loading: false
     })
-    const openDialog = (errorMessage) => {
-      getJsErrInfoByType(errorMessage)
+    const openDialog = (id) => {
+      getJsErrInfoById(id)
       state.visible = true
     }
     const closeDialog = () => {
       state.visible = false
     }
-    const getJsErrInfoByType = async (errorMessage) => {
+    const getJsErrInfoById = async (id) => {
       try {
         state.loading = true
-        const res = await API.getJsErrInfoByType({ errorMessage })
+        const res = await API.getJsErrInfoById({ id })
         if(res.data.code === 200) {
           state.jsErrDetail = res.data.data
         }
@@ -51,8 +52,7 @@ export default {
     return {
       ...toRefs(state),
       openDialog,
-      closeDialog,
-      getJsErrInfoByType
+      closeDialog
     }
   }
 }

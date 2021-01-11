@@ -24,3 +24,11 @@ export function getJsErrInfoByType(data) {
     params: data
   })
 }
+
+export function getJsErrInfoById(data) {
+  return axios({
+    url: '/getJsErrInfoById',
+    method: 'GET',
+    params: data
+  })
+}

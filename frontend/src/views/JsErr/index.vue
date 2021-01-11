@@ -5,7 +5,7 @@
       <span><WarningOutlined /> JS报错类型（{{ errNum }}个）</span>
       <span><FieldTimeOutlined /> {{ currentTime }}点</span>
     </div>
-    <a-table :data-source="jsDayErrList" bordered :loading="loading" :columns="columns">
+    <a-table :data-source="jsDayErrList" :loading="loading" :columns="columns">
       <template #errorMessage="{text}">
         <span>{{text}}</span>
       </template>
@@ -22,11 +22,10 @@
       </template>
     </a-table>
   </div>
-  <ErrDetail ref="errDetail"/>
 </template>
 <script>
 import { Chart } from '@antv/g2'
-import { onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, toRefs } from 'vue'
 import * as API from '@/api/index.js'
 import ANDROID_IMG from '@/assets/images/android.png'
 import IOS_IMG from '@/assets/images/ios.png'
@@ -40,8 +39,6 @@ import {
   WarningOutlined,
   FieldTimeOutlined
 } from '@ant-design/icons-vue';
-import ErrDetail from './components/ErrDetail'
-import { useRouter } from 'vue-router'
 
 export default {
   components: {
@@ -50,13 +47,9 @@ export default {
     AppleFilled,
     TeamOutlined,
     WarningOutlined,
-    FieldTimeOutlined,
-    ErrDetail
+    FieldTimeOutlined
   },
   setup () {
-    const router = useRouter()
-    console.log(router)
-    const errDetail = ref(null)
     const state = reactive({
       jsDayErrList: [],
       jsErrDetail: {},
@@ -163,15 +156,14 @@ export default {
       }
     }
     const openErrDetail = (errorMessage) => {
-      router.push(`/js_err_detail?errorMessage=${errorMessage}`)
+      window.open(`/#/js_err_detail?errorMessage=${errorMessage}`)
     }
     onMounted(() => {
       getJsErrListByHour()
     })
     return {
       ...toRefs(state),
-      openErrDetail,
-      errDetail
+      openErrDetail
     }
   }
 }

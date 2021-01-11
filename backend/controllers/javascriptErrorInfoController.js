@@ -81,6 +81,22 @@ class JavascriptErrorInfoController {
       console.log(e)
     }
   }
+  static async getJsErrInfoByID(ctx) {
+    try {
+      const id = ctx.query.id
+      if(id === undefined) {
+        ctx.response.status = 400;
+        ctx.body = statusCode.ERROR_400('id')
+        return
+      }
+      const sql = `SELECT * FROM webfunny1076JavascriptErrorInfo20201124 WHERE id='${id}'`
+      const errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
+      ctx.response.status = 200;
+      ctx.body = statusCode.SUCCESS_200('success', errDetail[0])
+    } catch(e) {
+      console.log(e)
+    }
+  }
 }
 
 module.exports = JavascriptErrorInfoController

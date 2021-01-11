@@ -1,21 +1,23 @@
 <template>
+  <div class="title">错误信息汇总：</div>
   <a-table :data-source="jsDetailList" bordered :loading="loading" :columns="columns">
       <template #operation="{record}">
-        <a-button size="small" type="link" @click="openErrDetail(record.errorMessage)">详情</a-button>
+        <a-button size="small" type="link" @click="openErrDetail(record.id)">详情</a-button>
       </template>
     </a-table>
   <ErrDetail ref="errDetail"/>
 </template>
 <script>
-import { onMounted, reactive, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import * as API from '@/api/index.js'
-
+import ErrDetail from './components/ErrDetail'
 
 export default {
+  components: { ErrDetail },
   setup () {
+    const errDetail = ref(null)
     const route = useRoute()
-    console.log(route)
     const state = reactive({
       jsDetailList: [],
       loading: false,
@@ -56,6 +58,13 @@ export default {
           key: 'happenDate',
           ellipsis: true
         },
+        {
+          title: '操作',
+          dataIndex: 'operation',
+          slots: { customRender: 'operation' },
+          width: '80px',
+          align: 'center'
+        }
       ]
 
     })
@@ -73,15 +82,23 @@ export default {
         state.loading = false
       }
     }
+    const openErrDetail = (id) => {
+      errDetail.value.openDialog(id)
+    }
     onMounted(() => {
       getJsDetailList()
     })
     return {
-      ...toRefs(state)
+      ...toRefs(state),
+      openErrDetail,
+      errDetail
     }
   }
 }
 </script>
 
 <style lang="less"  scoped>
+.title {
+  margin: 12px 0;
+}
 </style>
