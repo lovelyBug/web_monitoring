@@ -7,7 +7,15 @@
     title="错误详情"
   >
     <a-spin :spinning="loading" tip="Loading...">
-      {{ jsErrDetail }}
+      <div class="row">设备信息：{{ `${jsErrDetail.deviceName} ${jsErrDetail.os}` }}</div>
+      <div class="row">浏览器：{{ `${jsErrDetail.browserName} ${jsErrDetail.browserVersion}` }}</div>
+      <div class="row">IP地址：{{ `${jsErrDetail.monitorIp} ${jsErrDetail.city} ${jsErrDetail.country} ${jsErrDetail.province} ${jsErrDetail.city}` }}</div>
+      <div class="row">错误信息：{{ jsErrDetail.errorMessage }}</div>
+      <div class="row">堆栈类型：{{ jsErrDetail.errorStack }}</div>
+      <div class="row">浏览器信息：{{ jsErrDetail.browserInfo }}</div>
+      <div class="row">错误页面：{{ jsErrDetail.completeUrl }}</div>
+      <div class="row">发生时间：{{ jsErrDetail.happenDate }}</div>
+      <div class="row">浏览器信息：{{ jsErrDetail.browserInfo }}</div>
     </a-spin>
     <template #footer>
       <a-button key="back" @click="closeDialog">

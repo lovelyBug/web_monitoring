@@ -1,6 +1,6 @@
 <template>
   <div class="title">错误信息汇总：</div>
-  <a-table :data-source="jsDetailList" bordered :loading="loading" :columns="columns">
+  <a-table :data-source="jsDetailList" bordered :loading="loading" :columns="columns" rowKey="id">
       <template #operation="{record}">
         <a-button size="small" type="link" @click="openErrDetail(record.id)">详情</a-button>
       </template>
