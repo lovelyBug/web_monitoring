@@ -6,12 +6,13 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 export default {
   setup() {
-    const router = useRouter()
+    // const router = useRouter()
     const linkTo = () => {
-      router.push('/js_err')
+      // router.push('/js_err')
+      tt()
     }
     return {
       linkTo
