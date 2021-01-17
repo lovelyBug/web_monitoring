@@ -1,26 +1,22 @@
 <template>
-  <div>
-    主页
-  </div>
-  <a-button @click="linkTo">跳转</a-button>
+  <a-button class="err-btn" @click="createErr">手动报错</a-button>
 </template>
 
 <script>
-// import { useRouter } from 'vue-router'
 export default {
   setup() {
-    // const router = useRouter()
-    const linkTo = () => {
-      // router.push('/js_err')
+    const createErr = () => {
       tt()
     }
     return {
-      linkTo
+      createErr
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.err-btn {
+  margin: 20px;
+}
 </style>
