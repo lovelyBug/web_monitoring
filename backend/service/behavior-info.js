@@ -9,7 +9,7 @@ const behaviorInfo = {
         behaviorInfo.happenDate = moment(new Date(behaviorInfo.happenTime)).format('YYYY-MM-DD HH:mm:ss')
         await tables.tableInstance.BehaviorInfo.create(behaviorInfo)
       }
-      ctx.response.status = 200
+      ctx.status = 200
       ctx.body = statusCode.SUCCESS_200('success')
     } catch (e) {
       console.log(e)

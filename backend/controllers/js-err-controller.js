@@ -10,7 +10,7 @@ class JavascriptErrorInfoController {
     try {
       const date = ctx.query.day
       if(date === undefined) {
-        ctx.response.status = 400;
+        ctx.status = 400;
         ctx.body = statusCode.ERROR_400('请添参数：day')
         return
       }
@@ -36,7 +36,7 @@ class JavascriptErrorInfoController {
         item.counts = +item.counts
         return item
       })
-      ctx.response.status = 200;
+      ctx.status = 200;
       ctx.body = statusCode.SUCCESS_200('success', errHourList)
     } catch(e) {
       console.log(e)
@@ -46,7 +46,7 @@ class JavascriptErrorInfoController {
     try {
       const hour = ctx.query.hour
       if(hour === undefined) {
-        ctx.response.status = 400;
+        ctx.status = 400;
         ctx.body = statusCode.ERROR_400('请添参数：hour')
         return
       }
@@ -55,7 +55,7 @@ class JavascriptErrorInfoController {
       const endTime = `${day} ${hour}:59:59`
       const sql = `SELECT errorMessage, COUNT(deviceName = 'pc' or null) as pcNum, COUNT(deviceName = 'android' or null) as androidNum, COUNT(deviceName = 'ios' or null) as iosNum, COUNT(DISTINCT userId) as userNum FROM JavascriptErrorInfo WHERE happenDate BETWEEN '${startTime}' and '${endTime}' group by errorMessage`
       let errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
-      ctx.response.status = 200;
+      ctx.status = 200;
       ctx.body = statusCode.SUCCESS_200('success', errDetail)
     } catch(e) {
       console.log(e)
@@ -65,13 +65,13 @@ class JavascriptErrorInfoController {
     try {
       const errorMessage = ctx.query.errorMessage
       if(errorMessage === undefined) {
-        ctx.response.status = 400;
+        ctx.status = 400;
         ctx.body = statusCode.ERROR_400('请添参数：errorMessage')
         return
       }
       const sql = `SELECT * FROM JavascriptErrorInfo WHERE errorMessage='${errorMessage}'`
       const errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
-      ctx.response.status = 200;
+      ctx.status = 200;
       ctx.body = statusCode.SUCCESS_200('success', errDetail)
     } catch(e) {
       console.log(e)
@@ -81,13 +81,13 @@ class JavascriptErrorInfoController {
     try {
       const id = ctx.query.id
       if(id === undefined) {
-        ctx.response.status = 400;
+        ctx.status = 400;
         ctx.body = statusCode.ERROR_400('id')
         return
       }
       const sql = `SELECT * FROM JavascriptErrorInfo WHERE id='${id}'`
       const errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
-      ctx.response.status = 200;
+      ctx.status = 200;
       ctx.body = statusCode.SUCCESS_200('success', errDetail[0])
     } catch(e) {
       console.log(e)

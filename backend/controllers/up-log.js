@@ -37,6 +37,7 @@ class UpLogController {
         break
       default:
     }
+    ctx.status = 200
   }
 }
 

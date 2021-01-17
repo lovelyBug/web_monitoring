@@ -5,7 +5,7 @@ const resourceLoadInfo = {
   async saveResourceLoadInfo(ctx, logInfo) {
     try {
       const errList = await tables.tableInstance.ResourceLoadInfo.create(logInfo)
-      ctx.response.status = 200
+      ctx.status = 200
       ctx.body = statusCode.SUCCESS_200('success', errList)
     } catch (e) {
       console.log(e)
