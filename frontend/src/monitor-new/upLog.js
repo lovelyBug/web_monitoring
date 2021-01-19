@@ -2,8 +2,7 @@ export default function upLog(logInfo) {
   const str = window.btoa(encodeURIComponent(JSON.stringify(logInfo)))
   const host = 'http://127.0.0.1:8011/upLog'
   const url = `${host}?info=${str}`
-  var img = new window.Image()
-    img.src = url
+  sendBeacon(url)
 }
 
 function sendBeacon (url) {

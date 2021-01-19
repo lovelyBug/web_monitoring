@@ -31,6 +31,7 @@ import ANDROID_IMG from '@/assets/images/android.png'
 import IOS_IMG from '@/assets/images/ios.png'
 import WEB_IMG from '@/assets/images/web.png'
 import USERS_IMG from '@/assets/images/users.png'
+import moment from 'moment'
 import {
   IeOutlined,
   AndroidFilled,
@@ -121,7 +122,7 @@ export default {
     }
     const getJsErrListByHour = async () => {
       try {
-        const params = { day: '20201124' }
+        const params = { day: getDay() }
         const res = await API.getJsErrListByHour(params)
         if(res.data.code === 200) {
           const errList = res.data.data.map(item => {
@@ -130,7 +131,7 @@ export default {
           })
           initLineChart(errList)
           const { time } = errList[errList.length - 1]
-          state.currentTime = `2020-11-24 ${time}`
+          state.currentTime = `${getDay()} ${time}`
           getJSErrInfoByHour(time)
         }
       } catch(e) {
@@ -158,6 +159,7 @@ export default {
     const openErrDetail = (errorMessage) => {
       window.open(`/#/js_err_detail?errorMessage=${errorMessage}`)
     }
+    const getDay = () => moment(new Date()).format('yy-MM-DD')
     onMounted(() => {
       getJsErrListByHour()
     })

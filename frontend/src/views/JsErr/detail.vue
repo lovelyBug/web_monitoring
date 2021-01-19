@@ -12,6 +12,7 @@ import { onMounted, reactive, ref, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import * as API from '@/api/index.js'
 import ErrDetail from './components/ErrDetail'
+import moment from 'moment'
 
 export default {
   components: { ErrDetail },
@@ -72,7 +73,7 @@ export default {
       try {
         const errorMessage = route.query.errorMessage
         state.loading = true
-        const res = await API.getJsErrInfoByType({ errorMessage })
+        const res = await API.getJsErrInfoByType({ errorMessage, date: getDay() })
         if(res.data.code === 200) {
           state.jsDetailList = res.data.data
         }
@@ -85,6 +86,7 @@ export default {
     const openErrDetail = (id) => {
       errDetail.value.openDialog(id)
     }
+    const getDay = () => moment(new Date()).format('yy-MM-DD')
     onMounted(() => {
       getJsDetailList()
     })

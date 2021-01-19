@@ -14,9 +14,10 @@ class JavascriptErrorInfoController {
         ctx.body = statusCode.ERROR_400('请添参数：day')
         return
       }
-      // const date = moment(new Date()).format()
+      const startTime = `${date} 00:00:00`
+      const endTime = `${date} 23:59:59`
       const tableName = 'JavascriptErrorInfo'
-      const sql = `SELECT DATE_FORMAT(happenDate,'%H') AS time, COUNT(*) AS counts FROM ${tableName} GROUP BY time ORDER BY time`
+      const sql = `SELECT DATE_FORMAT(happenDate,'%H') AS time, COUNT(*) AS counts FROM ${tableName} WHERE happenDate BETWEEN '${startTime}' and '${endTime}' GROUP BY time ORDER BY time`
       let errHourList = await Sequelize.query(sql, { type: QueryTypes.SELECT })
       const map = {}
       errHourList.forEach(item => {
@@ -63,13 +64,15 @@ class JavascriptErrorInfoController {
   }
   static async getJsErrInfoByType(ctx) {
     try {
-      const errorMessage = ctx.query.errorMessage
+      const { errorMessage, date } = ctx.query
       if(errorMessage === undefined) {
         ctx.status = 400;
         ctx.body = statusCode.ERROR_400('请添参数：errorMessage')
         return
       }
-      const sql = `SELECT * FROM JavascriptErrorInfo WHERE errorMessage='${errorMessage}'`
+      const startTime = `${date} 00:00:00`
+      const endTime = `${date} 23:59:59`
+      const sql = `SELECT * FROM JavascriptErrorInfo WHERE happenDate BETWEEN '${startTime}' and '${endTime}' and errorMessage='${errorMessage}'`
       const errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
       ctx.status = 200;
       ctx.body = statusCode.SUCCESS_200('success', errDetail)

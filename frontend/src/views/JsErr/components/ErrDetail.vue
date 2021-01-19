@@ -7,15 +7,15 @@
     title="错误详情"
   >
     <a-spin :spinning="loading" tip="Loading...">
-      <div class="row">设备信息：{{ `${jsErrDetail.deviceName} ${jsErrDetail.os}` }}</div>
-      <div class="row">浏览器：{{ `${jsErrDetail.browserName} ${jsErrDetail.browserVersion}` }}</div>
-      <div class="row">IP地址：{{ `${jsErrDetail.monitorIp} ${jsErrDetail.city} ${jsErrDetail.country} ${jsErrDetail.province} ${jsErrDetail.city}` }}</div>
-      <div class="row">错误信息：{{ jsErrDetail.errorMessage }}</div>
-      <div class="row">堆栈类型：{{ jsErrDetail.errorStack }}</div>
-      <div class="row">浏览器信息：{{ jsErrDetail.browserInfo }}</div>
-      <div class="row">错误页面：{{ jsErrDetail.completeUrl }}</div>
-      <div class="row">发生时间：{{ jsErrDetail.happenDate }}</div>
-      <div class="row">浏览器信息：{{ jsErrDetail.browserInfo }}</div>
+      <div class="row"><span class="label">设备信息：</span>{{ `${jsErrDetail.deviceName} ${jsErrDetail.os}` }}</div>
+      <div class="row"><span class="label">浏览器：</span>{{ `${jsErrDetail.browserName} ${jsErrDetail.browserVersion}` }}</div>
+      <div class="row"><span class="label">IP地址：</span>{{ `${jsErrDetail.monitorIp} ${jsErrDetail.country} ${jsErrDetail.city || ''} ${jsErrDetail.province || ''} ${jsErrDetail.city || ''}` }}</div>
+      <div class="row"><span class="label">错误信息：</span>{{ jsErrDetail.errorMessage }}</div>
+      <div class="row"><span class="label">堆栈类型：</span>{{ jsErrDetail.errorStack }}</div>
+      <div class="row"><span class="label">浏览器信息：</span>{{ jsErrDetail.browserInfo }}</div>
+      <div class="row"><span class="label">错误页面：</span>{{ jsErrDetail.completeUrl }}</div>
+      <div class="row"><span class="label">发生时间：</span>{{ jsErrDetail.happenDate }}</div>
+      <div class="row"><span class="label">浏览器信息：</span>{{ jsErrDetail.browserInfo }}</div>
     </a-spin>
     <template #footer>
       <a-button key="back" @click="closeDialog">
@@ -66,6 +66,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.row {
+  line-height: 30px;
+}
+.label {
+  font-weight: 600;
+}
 </style>
