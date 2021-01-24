@@ -11,8 +11,8 @@
       <div class="row"><span class="label">浏览器：</span>{{ `${jsErrDetail.browserName} ${jsErrDetail.browserVersion}` }}</div>
       <div class="row"><span class="label">IP地址：</span>{{ `${jsErrDetail.monitorIp} ${jsErrDetail.country} ${jsErrDetail.city || ''} ${jsErrDetail.province || ''} ${jsErrDetail.city || ''}` }}</div>
       <div class="row"><span class="label">错误信息：</span>{{ jsErrDetail.errorMessage }}</div>
-      <div class="row"><span class="label">堆栈类型：</span>{{ jsErrDetail.errorStack }}</div>
-      <div class="row"><span class="label">浏览器信息：</span>{{ jsErrDetail.browserInfo }}</div>
+      <div class="row"><span class="label">堆栈信息：</span>{{ jsErrDetail.errorStack }}</div>
+      <div class="row"><span class="label">源码解析：</span><a-button>上传sourcemap文件</a-button></div>
       <div class="row"><span class="label">错误页面：</span>{{ jsErrDetail.completeUrl }}</div>
       <div class="row"><span class="label">发生时间：</span>{{ jsErrDetail.happenDate }}</div>
       <div class="row"><span class="label">浏览器信息：</span>{{ jsErrDetail.browserInfo }}</div>
@@ -69,6 +69,7 @@ export default {
 <style scoped>
 .row {
   line-height: 30px;
+  word-break:break-all
 }
 .label {
   font-weight: 600;

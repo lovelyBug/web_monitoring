@@ -37,8 +37,8 @@ export default {
         },
         {
           title: '设备',
-          dataIndex: 'errorMessage',
-          key: 'errorMessage',
+          dataIndex: 'deviceName',
+          key: 'deviceName',
           ellipsis: true
         },
         {

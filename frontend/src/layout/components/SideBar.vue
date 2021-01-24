@@ -22,7 +22,9 @@
           </template>
           <div class="link-text" type="link">{{ menus.label }}</div>
         </a-popover>
-        <div v-else class="link-text" type="link">{{ menus.label }}</div>
+        <router-link v-else :to="menus.link" class="link-text" type="link">
+          {{ menus.label }}
+        </router-link>
         <div v-if="menus.children && menus.children.length" class="active-bar"/>
       </div>
     </div>
@@ -76,7 +78,7 @@ export default {
       [
         {
           label: '首 页',
-          link: '',
+          link: '/',
         },
         {
           label: '概 览',

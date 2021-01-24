@@ -72,7 +72,7 @@ class JavascriptErrorInfoController {
       }
       const startTime = `${date} 00:00:00`
       const endTime = `${date} 23:59:59`
-      const sql = `SELECT * FROM JavascriptErrorInfo WHERE happenDate BETWEEN '${startTime}' and '${endTime}' and errorMessage='${errorMessage}'`
+      const sql = `SELECT * FROM JavascriptErrorInfo WHERE happenDate BETWEEN '${startTime}' and '${endTime}' and errorMessage="${errorMessage}"`
       const errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
       ctx.status = 200;
       ctx.body = statusCode.SUCCESS_200('success', errDetail)
