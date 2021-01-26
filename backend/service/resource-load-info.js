@@ -4,6 +4,7 @@ const tables = require('../config/table-config/create-table.js')
 const resourceLoadInfo = {
   async saveResourceLoadInfo(ctx, logInfo) {
     try {
+      console.log(logInfo)
       const errList = await tables.tableInstance.ResourceLoadInfo.create(logInfo)
       ctx.status = 200
       ctx.body = statusCode.SUCCESS_200('success', errList)

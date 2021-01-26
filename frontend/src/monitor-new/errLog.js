@@ -56,4 +56,5 @@ function ResourceLoadError(uploadType, elementType, sourceUrl, status) {
   this.elementType = elementType
   this.sourceUrl = sourceUrl
   this.status = status
+  setCommonProperty.call(this, 'resourceLoadInfo')
 }

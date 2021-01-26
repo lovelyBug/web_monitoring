@@ -94,7 +94,7 @@ export default {
             },
             {
               label: 'API接口错误统计',
-              link: ''
+              link: '/api_err'
             },
             {
               label: '静态资源错误统计',

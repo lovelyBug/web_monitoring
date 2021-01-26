@@ -2,25 +2,10 @@
   <div id="container"></div>
   <div v-if="jsDayErrList.length" class="err-list-container">
     <div class="title-view">
-      <span><WarningOutlined /> JS报错类型（{{ errNum }}个）</span>
+      <span><WarningOutlined /> APi报错类型（{{ errNum }}个）</span>
       <span><FieldTimeOutlined /> {{ currentTime }}点</span>
     </div>
-    <a-table :data-source="jsDayErrList" :loading="loading" :columns="columns">
-      <template #errorMessage="{text}">
-        <span>{{text}}</span>
-      </template>
-      <template #deviceInfo="{record}">
-        <div class="device-info">
-          <span><IeOutlined />（{{ record.pcNum }}次）</span>
-          <span><AndroidFilled />（{{ record.androidNum }}次）</span>
-          <span><AppleFilled />（{{ record.iosNum }}次）</span>
-          <span><TeamOutlined />（{{ record.userNum }}个）</span>
-        </div>
-      </template>
-      <template #operation="{record}">
-        <a-button size="small" type="link" @click="openErrDetail(record.errorMessage)">详情</a-button>
-      </template>
-    </a-table>
+    <a-table :data-source="jsDayErrList" :loading="loading" :columns="columns"/>
   </div>
 </template>
 <script>
@@ -33,20 +18,12 @@ import WEB_IMG from '@/assets/images/web.png'
 import USERS_IMG from '@/assets/images/users.png'
 import moment from 'moment'
 import {
-  IeOutlined,
-  AndroidFilled,
-  AppleFilled,
-  TeamOutlined,
   WarningOutlined,
   FieldTimeOutlined
 } from '@ant-design/icons-vue';
 
 export default {
   components: {
-    IeOutlined,
-    AndroidFilled,
-    AppleFilled,
-    TeamOutlined,
     WarningOutlined,
     FieldTimeOutlined
   },
@@ -63,24 +40,36 @@ export default {
       loading: false,
       columns: [
         {
-          title: '错误类型',
-          dataIndex: 'errorMessage',
-          key: 'errorMessage',
+          title: '请求链接',
+          dataIndex: 'httpUrl',
+          key: 'httpUrl',
           ellipsis: true
         },
         {
-          title: '设备错误信息',
-          dataIndex: 'deviceInfo',
-          slots: { customRender: 'deviceInfo' },
-          width: '360px'
+          title: '状态码',
+          dataIndex: 'status',
+          width: '100px'
         },
         {
-          title: '操作',
-          dataIndex: 'operation',
-          slots: { customRender: 'operation' },
-          width: '80px',
-          align: 'center'
+          title: '状态描述',
+          dataIndex: 'statusText',
+          width: '100px'
         },
+        {
+          title: '耗时（ms）',
+          dataIndex: 'loadTime',
+          width: '120px'
+        },
+        {
+          title: '错误数量',
+          dataIndex: 'num',
+          width: '100px'
+        },
+        {
+          title: '影响用户数',
+          dataIndex: 'userNum',
+          width: '120px'
+        }
       ]
     })
     const initLineChart = (errList) => {
@@ -111,7 +100,7 @@ export default {
         const data = intervalElement.getModel().data;
         const {time} = data
         state.currentTime = `2020-11-24 ${time}`
-        getJSErrInfoByHour(time)
+        getApiErrInfoByHour(time)
       });
       chart.legend(false);
       chart
@@ -120,10 +109,10 @@ export default {
         .color('counts', () => '#6130F5')
       chart.render();
     }
-    const getJsErrListByHour = async () => {
+    const getApiErrListByHour = async () => {
       try {
         const params = { day: getDay() }
-        const res = await API.getJsErrListByHour(params)
+        const res = await API.getApiErrListByHour(params)
         if(res.data.code === 200) {
           const errList = res.data.data.map(item => {
             item.count = +item.count
@@ -132,16 +121,16 @@ export default {
           initLineChart(errList)
           const time = new Date().getHours()
           state.currentTime = `${getDay()} ${time}`
-          getJSErrInfoByHour(time)
+          getApiErrInfoByHour(time)
         }
       } catch(e) {
         console.log(e)
       }
     }
-    const getJSErrInfoByHour = async (hour) => {
+    const getApiErrInfoByHour = async (hour) => {
       try {
         state.loading = true
-        const res = await API.getJSErrInfoByHour({ hour })
+        const res = await API.getApiErrInfoByHour({ hour })
         if(res.data.code === 200) {
           const { data } = res.data
           state.errNum = data.length
@@ -157,11 +146,11 @@ export default {
       }
     }
     const openErrDetail = (errorMessage) => {
-      window.open(`/#/js_err_detail?errorMessage=${errorMessage}`)
+      window.open(`/#/api_err_detail?errorMessage=${errorMessage}`)
     }
     const getDay = () => moment(new Date()).format('yy-MM-DD')
     onMounted(() => {
-      getJsErrListByHour()
+      getApiErrListByHour()
     })
     return {
       ...toRefs(state),
