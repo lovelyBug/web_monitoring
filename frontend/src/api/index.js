@@ -59,17 +59,18 @@ export function getApiErrInfoByHour(data) {
   })
 }
 
-export function getApiErrInfoByType(data) {
+export function getResourceErrListByHour(data) {
   return axios({
-    url: '/getApiErrInfoByType',
+    url: '/getResourceErrListByHour',
     method: 'GET',
     params: data
   })
 }
 
-export function getApiErrInfoById(data) {
+
+export function getResourceErrInfoByHour(data) {
   return axios({
-    url: '/getApiErrInfoById',
+    url: '/getResourceErrInfoByHour',
     method: 'GET',
     params: data
   })

@@ -22,6 +22,7 @@
       </template>
     </a-table>
   </div>
+  <empty-table v-else msg="赞！还没有错误数据呦~" />
 </template>
 <script>
 import { Chart } from '@antv/g2'
@@ -40,6 +41,7 @@ import {
   WarningOutlined,
   FieldTimeOutlined
 } from '@ant-design/icons-vue';
+import EmptyTable from '@/components/empty-table.vue'
 
 export default {
   components: {
@@ -48,7 +50,8 @@ export default {
     AppleFilled,
     TeamOutlined,
     WarningOutlined,
-    FieldTimeOutlined
+    FieldTimeOutlined,
+    EmptyTable
   },
   setup () {
     const state = reactive({

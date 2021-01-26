@@ -6,9 +6,7 @@ class UpLogController {
   static async index(ctx) {
     const logObj = ctx.query.info
     const logInfo = JSON.parse(decodeURIComponent(Buffer.from(logObj, 'base64').toString('utf-8')))
-    // const logInfo = JSON.parse(logObj)
     if (logInfo.uploadType !== 'behaviorInfo') {
-      // console.log(logInfo)
       logInfo.happenDate = moment(new Date(logInfo.happenTime)).format('YYYY-MM-DD HH:mm:ss')
       logInfo.happenDay = moment(new Date(logInfo.happenTime)).format('YYYY-MM-DD')
     }

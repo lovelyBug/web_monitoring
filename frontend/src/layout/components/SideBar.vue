@@ -98,7 +98,7 @@ export default {
             },
             {
               label: '静态资源错误统计',
-              link: ''
+              link: '/resource_err'
             }
           ]
         },

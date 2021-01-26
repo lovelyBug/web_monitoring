@@ -6,7 +6,7 @@ const routes = [
   { path: '/js_err', component: () => import('@/views/JsErr/index.vue') },
   { path: '/js_err_detail', component: () => import('@/views/JsErr/detail.vue') },
   { path: '/api_err', component: () => import('@/views/ApiErr/index.vue') },
-  { path: '/api_err_detail', component: () => import('@/views/ApiErr/detail.vue') }
+  { path: '/resource_err', component: () => import('@/views/ResourceErr/index.vue') }
 ]
 
 const router = createRouter({

@@ -4,11 +4,11 @@ const db = require('../config/db.js')
 const Sequelize = db.sequelize
 const { QueryTypes } = require('sequelize')
 const moment = require('moment')
-const tableName = 'HttpErrorInfo'
+const tableName = 'ResourceLoadInfo'
 
 
-class HttpErrorInfoController {
-  static async getApiErrListByHour(ctx) {
+class ResourceErrorInfoController {
+  static async getResourceErrListByHour(ctx) {
     try {
       const date = ctx.query.day
       if(date === undefined) {
@@ -18,7 +18,7 @@ class HttpErrorInfoController {
       }
       const startTime = `${date} 00:00:00`
       const endTime = `${date} 23:59:59`
-      const sql = `SELECT DATE_FORMAT(happenDate,'%H') AS time, COUNT(*) AS counts FROM ${tableName} WHERE happenDate BETWEEN '${startTime}' and '${endTime}' and statusResult = '请求返回' GROUP BY time ORDER BY time`
+      const sql = `SELECT DATE_FORMAT(happenDate,'%H') AS time, COUNT(*) AS counts FROM ${tableName} WHERE happenDate BETWEEN '${startTime}' and '${endTime}' GROUP BY time ORDER BY time`
       let errHourList = await Sequelize.query(sql, { type: QueryTypes.SELECT })
       const map = {}
       errHourList.forEach(item => {
@@ -44,7 +44,7 @@ class HttpErrorInfoController {
       console.log(e)
     }
   }
-  static async getApiErrInfoByHour(ctx) {
+  static async getResourceErrInfoByHour(ctx) {
     try {
       const hour = ctx.query.hour
       if(hour === undefined) {
@@ -55,11 +55,8 @@ class HttpErrorInfoController {
       const day = moment(new Date()).format('yy-MM-DD')
       const startTime = `${day} ${hour}:00:00`
       const endTime = `${day} ${hour}:59:59`
-      const sql = `SELECT statusText, httpUrl, status, AVG(loadTime) as loadTime, COUNT(httpUrl) as num, happenDate, COUNT(DISTINCT userId) as userNum FROM ${tableName} WHERE happenDate BETWEEN '${startTime}' and '${endTime}' and statusResult = '请求返回' GROUP BY httpUrl`
-      let errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
-      errDetail.map(item => {
-        item.loadTime = Math.round(item.loadTime)
-      })
+      const sql = `SELECT sourceUrl, elementType, COUNT(sourceUrl) as num, COUNT(DISTINCT userId) as userNum FROM ${tableName} WHERE happenDate BETWEEN '${startTime}' and '${endTime}' GROUP BY sourceUrl`
+      const errDetail = await Sequelize.query(sql, { type: QueryTypes.SELECT })
       ctx.status = 200
       ctx.body = statusCode.SUCCESS_200('success', errDetail)
     } catch(e) {
@@ -68,4 +65,4 @@ class HttpErrorInfoController {
   }
 }
 
-module.exports = HttpErrorInfoController
+module.exports = ResourceErrorInfoController

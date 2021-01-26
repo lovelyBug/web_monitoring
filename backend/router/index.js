@@ -1,5 +1,10 @@
 const Router = require('koa-router')
-const { JavascriptErrorInfoController, HttpErrorInfoController, UpLogController } = require('../controllers/index.js')
+const {
+  JavascriptErrorInfoController,
+  HttpErrorInfoController,
+  UpLogController,
+  ResourceErrorInfoController
+} = require('../controllers/index.js')
 
 const router = new Router()
 // 数据上报
@@ -13,7 +18,7 @@ router.get('/getJsErrInfoByID', JavascriptErrorInfoController.getJsErrInfoByID)
 // 接口错误统计
 router.get('/getApiErrListByHour', HttpErrorInfoController.getApiErrListByHour)
 router.get('/getApiErrInfoByHour', HttpErrorInfoController.getApiErrInfoByHour)
-router.get('/getApiErrInfoByType', HttpErrorInfoController.getApiErrInfoByType)
-router.get('/getApiErrInfoByID', HttpErrorInfoController.getApiErrInfoByID)
-
+// 资源加载错误统计
+router.get('/getResourceErrListByHour', ResourceErrorInfoController.getResourceErrListByHour)
+router.get('/getResourceErrInfoByHour', ResourceErrorInfoController.getResourceErrInfoByHour)
 module.exports = router

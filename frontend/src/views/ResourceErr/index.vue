@@ -2,7 +2,7 @@
   <div id="container"></div>
   <div v-if="jsDayErrList.length" class="err-list-container">
     <div class="title-view">
-      <span><WarningOutlined /> APi报错类型（{{ errNum }}个）</span>
+      <span><WarningOutlined /> 资源报错类型（{{ errNum }}个）</span>
       <span><FieldTimeOutlined /> {{ currentTime }}点</span>
     </div>
     <a-table :data-source="jsDayErrList" :loading="loading" :columns="columns"/>
@@ -43,30 +43,20 @@ export default {
       loading: false,
       columns: [
         {
-          title: '请求链接',
-          dataIndex: 'httpUrl',
-          key: 'httpUrl',
+          title: '资源链接',
+          dataIndex: 'sourceUrl',
+          key: 'sourceUrl',
           ellipsis: true
         },
         {
-          title: '状态码',
-          dataIndex: 'status',
+          title: '资源类型',
+          dataIndex: 'elementType',
           width: '100px'
         },
         {
-          title: '状态描述',
-          dataIndex: 'statusText',
-          width: '100px'
-        },
-        {
-          title: '平均耗时（ms）',
-          dataIndex: 'loadTime',
-          width: '140px'
-        },
-        {
-          title: '错误数量',
+          title: '发生次数',
           dataIndex: 'num',
-          width: '100px'
+          width: '140px'
         },
         {
           title: '影响用户数',
@@ -103,7 +93,7 @@ export default {
         const data = intervalElement.getModel().data;
         const {time} = data
         state.currentTime = `2020-11-24 ${time}`
-        getApiErrInfoByHour(time)
+        getResourceErrInfoByHour(time)
       });
       chart.legend(false);
       chart
@@ -112,10 +102,10 @@ export default {
         .color('counts', () => '#6130F5')
       chart.render();
     }
-    const getApiErrListByHour = async () => {
+    const getResourceErrListByHour = async () => {
       try {
         const params = { day: getDay() }
-        const res = await API.getApiErrListByHour(params)
+        const res = await API.getResourceErrListByHour(params)
         if(res.data.code === 200) {
           const errList = res.data.data.map(item => {
             item.count = +item.count
@@ -124,16 +114,16 @@ export default {
           initLineChart(errList)
           const time = new Date().getHours()
           state.currentTime = `${getDay()} ${time}`
-          getApiErrInfoByHour(time)
+          getResourceErrInfoByHour(time)
         }
       } catch(e) {
         console.log(e)
       }
     }
-    const getApiErrInfoByHour = async (hour) => {
+    const getResourceErrInfoByHour = async (hour) => {
       try {
         state.loading = true
-        const res = await API.getApiErrInfoByHour({ hour })
+        const res = await API.getResourceErrInfoByHour({ hour })
         if(res.data.code === 200) {
           const { data } = res.data
           state.errNum = data.length
@@ -153,7 +143,7 @@ export default {
     }
     const getDay = () => moment(new Date()).format('yy-MM-DD')
     onMounted(() => {
-      getApiErrListByHour()
+      getResourceErrListByHour()
     })
     return {
       ...toRefs(state),
