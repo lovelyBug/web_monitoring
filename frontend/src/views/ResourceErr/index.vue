@@ -7,7 +7,7 @@
     </div>
     <a-table :data-source="jsDayErrList" :loading="loading" :columns="columns"/>
   </div>
-  <empty-table v-else msg="赞！还没有错误数据呦~" />
+  <empty-table v-else msg="赞！当前时间点还没有错误数据呦~" />
 </template>
 <script>
 import { Chart } from '@antv/g2'
