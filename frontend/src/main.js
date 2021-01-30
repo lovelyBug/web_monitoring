@@ -6,7 +6,7 @@ import 'ant-design-vue/dist/antd.less';
 import './monitor-new/index.js'
 import { message } from 'ant-design-vue'
 import router from './router/index.js'
-// import './style/antd.less'
+import './style/variable.less'
 
 const app = createApp(App)
 app.use(Antd)

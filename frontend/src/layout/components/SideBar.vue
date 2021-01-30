@@ -108,7 +108,7 @@ export default {
           children: [
             {
               label: '接口耗时分析',
-              link: ''
+              link: '/api_analysis'
             },
             {
               label: '页面性能分析',

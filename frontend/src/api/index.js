@@ -75,3 +75,20 @@ export function getResourceErrInfoByHour(data) {
     params: data
   })
 }
+
+export function getApiLogListByHour(data) {
+  return axios({
+    url: '/getApiLogListByHour',
+    method: 'GET',
+    params: data
+  })
+}
+
+
+export function getApiLogInfoByHour(data) {
+  return axios({
+    url: '/getApiLogInfoByHour',
+    method: 'GET',
+    params: data
+  })
+}

@@ -3,7 +3,8 @@ const {
   JavascriptErrorInfoController,
   HttpErrorInfoController,
   UpLogController,
-  ResourceErrorInfoController
+  ResourceErrorInfoController,
+  HttpLogInfoController
 } = require('../controllers/index.js')
 
 const router = new Router()
@@ -21,4 +22,7 @@ router.get('/getApiErrInfoByHour', HttpErrorInfoController.getApiErrInfoByHour)
 // 资源加载错误统计
 router.get('/getResourceErrListByHour', ResourceErrorInfoController.getResourceErrListByHour)
 router.get('/getResourceErrInfoByHour', ResourceErrorInfoController.getResourceErrInfoByHour)
+// API信息
+router.get('/getApiLogListByHour', HttpLogInfoController.getApiLogListByHour)
+router.get('/getApiLogInfoByHour', HttpLogInfoController.getApiLogInfoByHour)
 module.exports = router

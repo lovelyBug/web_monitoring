@@ -17,9 +17,9 @@ const httpErrorInfo = {
   }
 }
 function sendHttpErrEmail(logInfo) {
-  const {completeUrl, loadTime, status, responseText, happenDate} = logInfo
+  const {httpUrl, loadTime, status, responseText, happenDate} = logInfo
   const html = `
-    <div>接口地址：${completeUrl}</div>
+    <div>接口地址：${httpUrl}</div>
     <div>耗时：${loadTime}ms</div>
     <div>状态码：${status}</div>
     <div>状态描述：${responseText}</div>

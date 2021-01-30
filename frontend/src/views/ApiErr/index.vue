@@ -2,8 +2,8 @@
   <div id="container"></div>
   <div v-if="jsDayErrList.length" class="err-list-container">
     <div class="title-view">
-      <span><WarningOutlined /> APi报错类型（{{ errNum }}个）</span>
-      <span><FieldTimeOutlined /> {{ currentTime }}点</span>
+      <span class="red"><WarningOutlined style="color: red" /> APi报错类型（{{ errNum }}个）</span>
+      <span class="primary-color" ><FieldTimeOutlined /> {{ currentTime }}点</span>
     </div>
     <a-table :data-source="jsDayErrList" :loading="loading" :columns="columns"/>
   </div>
@@ -56,7 +56,6 @@ export default {
         {
           title: '状态描述',
           dataIndex: 'statusText',
-          width: '100px'
         },
         {
           title: '平均耗时（ms）',

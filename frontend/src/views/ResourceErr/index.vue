@@ -2,8 +2,8 @@
   <div id="container"></div>
   <div v-if="jsDayErrList.length" class="err-list-container">
     <div class="title-view">
-      <span><WarningOutlined /> 资源报错类型（{{ errNum }}个）</span>
-      <span><FieldTimeOutlined /> {{ currentTime }}点</span>
+      <span class="red"><WarningOutlined /> 静态资源加载报错类型（{{ errNum }}个）</span>
+      <span class="primary-color" ><FieldTimeOutlined /> {{ currentTime }}点</span>
     </div>
     <a-table :data-source="jsDayErrList" :loading="loading" :columns="columns"/>
   </div>
@@ -166,6 +166,7 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 6px;
+    color: red;
   }
   .err-list-item {
     width: 100%;
