@@ -136,7 +136,7 @@ export default {
           children: [
             {
               label: '用户细查（有userId精确查找）',
-              link: ''
+              link: '/user_log'
             },
             {
               label: '用户细查（无userId查找）',

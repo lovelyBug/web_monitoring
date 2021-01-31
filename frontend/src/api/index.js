@@ -92,3 +92,11 @@ export function getApiLogInfoByHour(data) {
     params: data
   })
 }
+
+export function getUserLog(data) {
+  return axios({
+    url: '/getUserLog',
+    method: 'GET',
+    params: data
+  })
+}

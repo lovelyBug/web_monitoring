@@ -16,5 +16,6 @@
   max-height: 100vh;
   overflow: auto;
   padding: 0 12px;
+  // background-color: rgb(243, 243, 243);
 }
 </style>

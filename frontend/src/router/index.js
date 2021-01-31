@@ -7,7 +7,8 @@ const routes = [
   { path: '/js_err_detail', component: () => import('@/views/JsErr/detail.vue') },
   { path: '/api_err', component: () => import('@/views/ApiErr/index.vue') },
   { path: '/resource_err', component: () => import('@/views/ResourceErr/index.vue') },
-  { path: '/api_analysis', component: () => import('@/views/ApiAnalysis/index.vue') }
+  { path: '/api_analysis', component: () => import('@/views/ApiAnalysis/index.vue') },
+  { path: '/user_log', component: () => import('@/views/UserLog/index.vue') }
 ]
 
 const router = createRouter({

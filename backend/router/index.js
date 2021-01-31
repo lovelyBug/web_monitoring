@@ -4,7 +4,8 @@ const {
   HttpErrorInfoController,
   UpLogController,
   ResourceErrorInfoController,
-  HttpLogInfoController
+  HttpLogInfoController,
+  UserLogController
 } = require('../controllers/index.js')
 
 const router = new Router()
@@ -25,4 +26,7 @@ router.get('/getResourceErrInfoByHour', ResourceErrorInfoController.getResourceE
 // API信息
 router.get('/getApiLogListByHour', HttpLogInfoController.getApiLogListByHour)
 router.get('/getApiLogInfoByHour', HttpLogInfoController.getApiLogInfoByHour)
+// 用户日志查询
+router.get('/getUserLog', UserLogController.getUserLog)
+
 module.exports = router
